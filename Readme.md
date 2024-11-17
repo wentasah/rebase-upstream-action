@@ -25,11 +25,26 @@ jobs:
     - uses: actions/checkout@master
       with:
         fetch-depth: 10  # greater than the number of commits you made
+        # token: ${{ secrets.WORKFLOW_TOKEN }}
     - uses: imba-tjd/rebase-upstream-action@master
       # with:  # all args are optional
       #   upstream: <user>/<repo>
       #   branch:   master
 ```
+
+If `git push` fails with an error like:
+
+> refusing to allow a GitHub App to create or update workflow
+> `.github/workflows/build.yaml` without `workflows` permission
+
+you should [create a fine-grained personal access token][PAT] with
+`contents:write`, `workflows:write` and `metadata:read` permissions
+and use it in the `token` option of the `checkout` step. See
+[here](https://github.com/orgs/community/discussions/35410#discussioncomment-7645702)
+for context.
+
+[PAT]: https://github.com/settings/tokens?type=beta
+
 
 ## Comparison
 
